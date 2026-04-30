@@ -1,0 +1,34 @@
+<odoo>
+    <!-- Action for Patients -->
+    <record id="action_hospital_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">list,form</field> <!-- Changed tree to list -->
+    </record>
+
+    <!-- Action for Appointments -->
+    <record id="action_hospital_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">list,form</field> <!-- Changed tree to list -->
+    </record>
+
+    <!-- Patient List View (Optional: explicitly naming it list) -->
+    <record id="view_patient_tree" model="ir.ui.view">
+        <field name="name">hospital.patient.list</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <list> <!-- Changed from <tree> to <list> -->
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="age"/>
+                
+            </list>
+        </field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_hospital_root" name="Hospital"/>
+    <menuitem id="menu_patient" name="Patients" parent="menu_hospital_root" action="action_hospital_patient"/>
+    <menuitem id="menu_appointment" name="Appointments" parent="menu_hospital_root" action="action_hospital_appointment"/>
+</odoo>

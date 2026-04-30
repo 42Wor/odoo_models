@@ -1,34 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Action for Patients -->
-    <record id="action_hospital_patient" model="ir.actions.act_window">
-        <field name="name">Patients</field>
-        <field name="res_model">hospital.patient</field>
-        <field name="view_mode">list,form</field> <!-- Changed tree to list -->
+
+    <!-- ================= PATIENT VIEWS ================= -->
+    <record id="view_patient_form" model="ir.ui.view">
+        <field name="name">hospital.patient.form</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Patient Name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="age"/>
+                            <field name="gender"/>
+                        </group>
+                        <group>
+                            <field name="blood_group"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Appointments">
+                            <field name="appointment_ids">
+                                <!-- FIXED FOR ODOO 18: Using <list> instead of <tree> -->
+                                <list>
+                                    <field name="name"/>
+                                    <field name="doctor_id"/>
+                                    <field name="date"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'confirmed'"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
     </record>
 
-    <!-- Action for Appointments -->
-    <record id="action_hospital_appointment" model="ir.actions.act_window">
-        <field name="name">Appointments</field>
-        <field name="res_model">hospital.appointment</field>
-        <field name="view_mode">list,form</field> <!-- Changed tree to list -->
-    </record>
-
-    <!-- Patient List View (Optional: explicitly naming it list) -->
-    <record id="view_patient_tree" model="ir.ui.view">
+    <record id="view_patient_list" model="ir.ui.view">
         <field name="name">hospital.patient.list</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
-            <list> <!-- Changed from <tree> to <list> -->
+            <list>
                 <field name="name"/>
-                <field name="gender"/>
                 <field name="age"/>
-                
+                <field name="gender"/>
+                <field name="blood_group"/>
             </list>
         </field>
     </record>
 
-    <!-- Menus -->
-    <menuitem id="menu_hospital_root" name="Hospital"/>
-    <menuitem id="menu_patient" name="Patients" parent="menu_hospital_root" action="action_hospital_patient"/>
-    <menuitem id="menu_appointment" name="Appointments" parent="menu_hospital_root" action="action_hospital_appointment"/>
+    <!-- ================= APPOINTMENT VIEWS ================= -->
+    <record id="view_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_appointment_list" model="ir.ui.view">
+        <field name="name">hospital.appointment.list</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'done'" decoration-info="state == 'confirmed'">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="date"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================= STAFF & DEPT VIEWS ================= -->
+    <record id="view_staff_list" model="ir.ui.view">
+        <field name="name">hospital.staff.list</field>
+        <field name="model">hospital.staff</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="role"/>
+                <field name="department_id"/>
+                <field name="phone"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_department_list" model="ir.ui.view">
+        <field name="name">hospital.department.list</field>
+        <field name="model">hospital.department</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================= ACTIONS ================= -->
+    <record id="action_hospital_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_hospital_appointment" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_hospital_staff" model="ir.actions.act_window">
+        <field name="name">Staff</field>
+        <field name="res_model">hospital.staff</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_hospital_department" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="res_model">hospital.department</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ================= MENUS ================= -->
+    <menuitem id="menu_hospital_root" name="Hospital" sequence="10"/>
+    
+    <menuitem id="menu_hospital_operations" name="Operations" parent="menu_hospital_root" sequence="10"/>
+    <menuitem id="menu_hospital_configuration" name="Configuration" parent="menu_hospital_root" sequence="20"/>
+
+    <menuitem id="menu_patient" name="Patients" parent="menu_hospital_operations" action="action_hospital_patient" sequence="10"/>
+    <menuitem id="menu_appointment" name="Appointments" parent="menu_hospital_operations" action="action_hospital_appointment" sequence="20"/>
+    
+    <menuitem id="menu_staff" name="Staff" parent="menu_hospital_configuration" action="action_hospital_staff" sequence="10"/>
+    <menuitem id="menu_department" name="Departments" parent="menu_hospital_configuration" action="action_hospital_department" sequence="20"/>
+
 </odoo>

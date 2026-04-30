@@ -1,0 +1,6 @@
+id,name,description
+dept_cardio,Cardiology,Heart and cardiovascular system
+dept_neuro,Neurology,Brain and nervous system
+dept_ortho,Orthopedics,Bones and muscles
+dept_peds,Pediatrics,Children and infants
+dept_er,Emergency,Emergency and trauma care

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. Search View -->
+    <record id="view_dev_task_search" model="ir.ui.view">
+        <field name="name">dev.task.search</field>
+        <field name="model">dev.task</field>
+        <field name="arch" type="xml">
+            <search string="Search Tasks">
+                <field name="name"/>
+                <field name="developer_id"/>
+                <filter string="My Tasks" name="my_tasks" domain="[('developer_id', '=', uid)]"/>
+                <separator/>
+                <filter string="High Priority" name="high_priority" domain="[('priority', '=', 'high')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                    <filter string="Developer" name="group_by_dev" context="{'group_by': 'developer_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+<!-- 2. Kanban View (Cool Design & Fixed Positions) -->
+    <record id="view_dev_task_kanban" model="ir.ui.view">
+        <field name="name">dev.task.kanban</field>
+        <field name="model">dev.task</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" 
+                    class="o_kanban_small_column" 
+                    on_create="quick_create" 
+                    records_draggable="true">
+                
+                <!-- Required for Odoo 18 Owl Framework -->
+                <field name="name"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="developer_id"/>
+                
+                <templates>
+                    <t t-name="card">
+                        <!-- d-flex flex-column h-100 makes the card a flexible box -->
+                        <div class="oe_kanban_global_click d-flex flex-column h-100">
+                            
+                            <!-- TOP ROW: Title (Left) and Priority (Right) -->
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <!-- fs-5 makes the title text slightly larger and cooler -->
+                                <strong class="o_kanban_record_title fs-5">
+                                    <field name="name"/>
+                                </strong>
+                                <field name="priority" widget="badge" 
+                                       decoration-danger="priority == 'high'" 
+                                       decoration-info="priority == 'low'"
+                                       decoration-success="priority == 'normal'"/>
+                            </div>
+                            
+                            <!-- BOTTOM ROW: Avatar pushed to the bottom right -->
+                            <!-- mt-auto pushes this div to the very bottom of the card -->
+                            <div class="d-flex justify-content-end align-items-center mt-auto">
+                                <field name="developer_id" widget="many2one_avatar_user"/>
+                            </div>
+                            
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- 3. List View -->
+    <record id="view_dev_task_list" model="ir.ui.view">
+        <field name="name">dev.task.list</field>
+        <field name="model">dev.task</field>
+        <field name="arch" type="xml">
+            <list string="Developer Tasks">
+                <field name="name"/>
+                <field name="developer_id" widget="many2one_avatar_user"/>
+                <field name="priority" widget="badge" decoration-danger="priority == 'high'" decoration-info="priority == 'low'"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- 4. Form View -->
+    <record id="view_dev_task_form" model="ir.ui.view">
+        <field name="name">dev.task.form</field>
+        <field name="model">dev.task</field>
+        <field name="arch" type="xml">
+            <form string="Developer Task">
+                <header>
+                    <button name="action_start_work" string="Start Work" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_mark_done" string="Mark as Done" type="object" class="oe_highlight" invisible="state != 'in_progress'"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object" invisible="state == 'draft'"/>
+                    <button name="action_delete_task" string="Delete" type="object" class="btn-danger" confirm="Delete permanently?"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Completed" bg_color="text-bg-success" invisible="state != 'done'"/>
+                    <div class="oe_title">
+                        <label for="name" string="Task Title"/>
+                        <h1><field name="name" placeholder="e.g. Fix Database Connection"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="developer_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group>
+                            <field name="priority" widget="radio" options="{'horizontal': true}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Task Details" name="details">
+                            <field name="description" placeholder="Describe the technical requirements..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- 5. Action (FIXED: Removed default filter so you see all columns immediately) -->
+    <record id="action_dev_task" model="ir.actions.act_window">
+        <field name="name">Developer Tasks</field>
+        <field name="res_model">dev.task</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first task!</p>
+        </field>
+    </record>
+
+    <!-- 6. Menus -->
+    <menuitem id="menu_dev_task_root" name="Dev Tasks" sequence="10"/>
+    <menuitem id="menu_dev_task_list" name="All Tasks" parent="menu_dev_task_root" action="action_dev_task" sequence="10"/>
+
+</odoo>

@@ -1,57 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- ================= PATIENT VIEWS ================= -->
-    <record id="view_patient_form" model="ir.ui.view">
-        <field name="name">hospital.patient.form</field>
-        <field name="model">hospital.patient</field>
+    <!-- 1. PATIENT VIEW (Inherited from Contacts) -->
+    <record id="view_partner_form_hospital" model="ir.ui.view">
+        <field name="name">res.partner.form.hospital</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <form>
-                <sheet>
-                    <div class="oe_title">
-                        <h1><field name="name" placeholder="Patient Name"/></h1>
-                    </div>
-                    <group>
-                        <group>
-                            <field name="age"/>
-                            <field name="gender"/>
-                        </group>
-                        <group>
-                            <field name="blood_group"/>
-                        </group>
-                    </group>
-                    <notebook>
-                        <page string="Appointments">
-                            <field name="appointment_ids">
-                                <!-- FIXED FOR ODOO 18: Using <list> instead of <tree> -->
-                                <list>
-                                    <field name="name"/>
-                                    <field name="doctor_id"/>
-                                    <field name="date"/>
-                                    <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'confirmed'"/>
-                                </list>
-                            </field>
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
+            <xpath expr="//field[@name='function']" position="after">
+                <field name="is_patient"/>
+                <field name="blood_group" invisible="not is_patient"/>
+                <field name="age" invisible="not is_patient"/>
+                <field name="gender" invisible="not is_patient"/>
+            </xpath>
         </field>
     </record>
 
-    <record id="view_patient_list" model="ir.ui.view">
-        <field name="name">hospital.patient.list</field>
-        <field name="model">hospital.patient</field>
-        <field name="arch" type="xml">
-            <list>
-                <field name="name"/>
-                <field name="age"/>
-                <field name="gender"/>
-                <field name="blood_group"/>
-            </list>
-        </field>
-    </record>
-
-    <!-- ================= APPOINTMENT VIEWS ================= -->
+    <!-- 2. APPOINTMENT VIEW (With Chatter) -->
     <record id="view_appointment_form" model="ir.ui.view">
         <field name="name">hospital.appointment.form</field>
         <field name="model">hospital.appointment</field>
@@ -66,7 +31,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="patient_id"/>
+                            <field name="patient_id" context="{'default_is_patient': True}"/>
                             <field name="doctor_id"/>
                         </group>
                         <group>
@@ -74,6 +39,7 @@
                         </group>
                     </group>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
@@ -92,7 +58,7 @@
         </field>
     </record>
 
-    <!-- ================= STAFF & DEPT VIEWS ================= -->
+    <!-- 3. STAFF & DEPARTMENT VIEWS (Configuration) -->
     <record id="view_staff_list" model="ir.ui.view">
         <field name="name">hospital.staff.list</field>
         <field name="model">hospital.staff</field>
@@ -101,27 +67,17 @@
                 <field name="name"/>
                 <field name="role"/>
                 <field name="department_id"/>
-                <field name="phone"/>
             </list>
         </field>
     </record>
 
-    <record id="view_department_list" model="ir.ui.view">
-        <field name="name">hospital.department.list</field>
-        <field name="model">hospital.department</field>
-        <field name="arch" type="xml">
-            <list>
-                <field name="name"/>
-                <field name="description"/>
-            </list>
-        </field>
-    </record>
-
-    <!-- ================= ACTIONS ================= -->
+    <!-- 4. ACTIONS -->
     <record id="action_hospital_patient" model="ir.actions.act_window">
         <field name="name">Patients</field>
-        <field name="res_model">hospital.patient</field>
+        <field name="res_model">res.partner</field>
         <field name="view_mode">list,form</field>
+        <field name="domain">[('is_patient', '=', True)]</field>
+        <field name="context">{'default_is_patient': True}</field>
     </record>
 
     <record id="action_hospital_appointment" model="ir.actions.act_window">
@@ -142,16 +98,17 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <!-- ================= MENUS ================= -->
+    <!-- 5. MENUS (Organized Structure) -->
     <menuitem id="menu_hospital_root" name="Hospital" sequence="10"/>
-    
-    <menuitem id="menu_hospital_operations" name="Operations" parent="menu_hospital_root" sequence="10"/>
-    <menuitem id="menu_hospital_configuration" name="Configuration" parent="menu_hospital_root" sequence="20"/>
 
+    <!-- Operations Category -->
+    <menuitem id="menu_hospital_operations" name="Operations" parent="menu_hospital_root" sequence="10"/>
     <menuitem id="menu_patient" name="Patients" parent="menu_hospital_operations" action="action_hospital_patient" sequence="10"/>
     <menuitem id="menu_appointment" name="Appointments" parent="menu_hospital_operations" action="action_hospital_appointment" sequence="20"/>
-    
-    <menuitem id="menu_staff" name="Staff" parent="menu_hospital_configuration" action="action_hospital_staff" sequence="10"/>
-    <menuitem id="menu_department" name="Departments" parent="menu_hospital_configuration" action="action_hospital_department" sequence="20"/>
+
+    <!-- Configuration Category -->
+    <menuitem id="menu_hospital_config" name="Configuration" parent="menu_hospital_root" sequence="100"/>
+    <menuitem id="menu_staff" name="Staff" parent="menu_hospital_config" action="action_hospital_staff" sequence="10"/>
+    <menuitem id="menu_department" name="Departments" parent="menu_hospital_config" action="action_hospital_department" sequence="20"/>
 
 </odoo>

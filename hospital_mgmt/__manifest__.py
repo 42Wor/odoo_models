@@ -8,7 +8,7 @@
 Long description of module's purpose
     """,
 
-    'author': "My Company",
+    'author': "Maaz waheed",
     'website': "https://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
@@ -18,16 +18,15 @@ Long description of module's purpose
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
-
-    # always loaded
+'depends': ['base', 'web', 'mail', 'contacts'],
     'data': [
         'security/ir.model.access.csv',
+        'views/sequence.xml',
+        'data/hospital.department.csv',
+        'data/hospital.staff.csv',
+        'data/res.partner.csv',
+        'data/hospital.appointment.csv',
         'views/views.xml',
-        #'views/templates.xml',
-
-        'data/hospital.department.csv',  # Load departments first
-        'data/hospital.staff.csv',       # Then load staff
     ],
     # only loaded in demonstration mode
     'demo': [

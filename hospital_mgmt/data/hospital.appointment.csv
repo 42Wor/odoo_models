@@ -1,0 +1,3 @@
+id,name,patient_id/id,doctor_id/id,date,state
+apt_01,APT-0001,patient_maaz,staff_dr_john,2026-05-10 10:00:00,confirmed
+apt_02,APT-0002,patient_ali,staff_dr_jane,2026-05-11 14:30:00,draft

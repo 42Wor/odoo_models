@@ -1,0 +1,3 @@
+id,name,is_patient,age,gender,blood_group
+patient_maaz,Maaz Khan,1,25,m,o+
+patient_ali,Ali Ahmed,1,30,m,a+

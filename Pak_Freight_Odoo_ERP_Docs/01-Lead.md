@@ -94,5 +94,5 @@ Here is an example of a completed Lead record:
 ## 8. Next Steps / Workflow Transition
 After gathering rates and verifying the customer:
 1. The user clicks **"Create Quotation"**.
-2. The system moves to **Stage 02: Quotation**.
+2. The system moves to **Stage 02: [Quotation](02-Quotation.md)**.
 3. All data copies to the new quote automatically. This prevents typing errors.

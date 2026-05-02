@@ -90,6 +90,6 @@ Here is an example of a shipment going through the **Yellow Channel**:
 
 ## 8. Next Steps / Workflow Transition
 Once the "Out of Charge" (OOC) is granted:
-1. The system moves to **Stage 07: Stuffing & Gate-In**.
+1. The system moves to **Stage 07: [Stuffing & Gate-In](07-Stuffing-&-Gate-In.md)**.
 2. The cargo is now legally free. We coordinate with the **Transporter** to pick up the goods from the port or terminal.
 3. We prepare the **Delivery Order (DO)**.

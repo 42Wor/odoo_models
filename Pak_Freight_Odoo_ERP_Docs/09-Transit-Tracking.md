@@ -84,6 +84,6 @@ Here is an example of a shipment being tracked:
 
 ## 8. Next Steps / Workflow Transition
 Once the ship finally arrives at the destination port (Karachi):
-1. The system moves to **Stage 10: Delivery & POD**.
+1. The system moves to **Stage 10: [Delivery & POD](10-Delivery&POD.md)**.
 2. The container is unloaded from the ship.
 3. We send the truck to pick up the goods and deliver them to the customer's door.

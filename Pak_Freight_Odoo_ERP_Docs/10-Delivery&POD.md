@@ -85,6 +85,6 @@ Here is an example of a completed delivery:
 
 ## 8. Next Steps / Workflow Transition
 Now that the goods are safely with the customer:
-1. The system moves to **Stage 11: Final Invoice & Close**.
+1. The system moves to **Stage 11: [Final Invoice & Close](11-Final-Invoice&Close.md)**.
 2. We calculate the final profit for the job.
 3. We collect the remaining balance from the customer and pay our vendors (shipping lines, truckers).

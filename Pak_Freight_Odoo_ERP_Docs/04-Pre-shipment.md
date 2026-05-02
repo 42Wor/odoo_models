@@ -88,5 +88,5 @@ Here is an example of the Document Checklist for our textile shipment:
 ## 8. Next Steps / Workflow Transition
 Once the checklist is 100% complete and verified:
 1. The Operations Manager clicks **"Ready for Filing"**.
-2. The system moves to **Stage 05: GD Filing**.
+2. The system moves to **Stage 05: [GD Filing](05-GD-Filing.md)**.
 3. The data is now ready to be sent to the **Clearing Agent** to file the Goods Declaration (GD) on the government's WeBOC/PSW system.

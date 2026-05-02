@@ -108,6 +108,6 @@ Here is an example of a completed Booking (Job Order) record:
 
 ## 8. Next Steps / Workflow Transition
 Now that the space is booked and the ship is scheduled:
-1. The Operations team moves to **Stage 04: Pre-shipment Docs**.
+1. The Operations team moves to **Stage 04: [Pre-shipment](04-Pre-shipment.md)**.
 2. The system generates a checklist of required paperwork (Commercial Invoice, Packing List, Certificate of Origin, Bank E-Form).
 3. The customer must upload these documents before the cargo can be loaded or cleared through customs.

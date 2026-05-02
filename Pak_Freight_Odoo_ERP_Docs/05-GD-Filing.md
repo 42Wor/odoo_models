@@ -87,6 +87,6 @@ Here is an example of a Job Order that has just been filed:
 
 ## 8. Next Steps / Workflow Transition
 Now that the government has our paperwork:
-1. The system moves to **Stage 06: Customs Clearance**.
+1. The system moves to **Stage 06: [Customs Clearance](06-Customs-Clearance.md)**.
 2. We wait for the government's "Risk Engine" to assign a channel (**Green, Yellow, or Red**).
 3. The Clearing Agent monitors the status to see if the cargo needs a physical inspection.

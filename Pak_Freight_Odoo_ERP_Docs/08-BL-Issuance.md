@@ -85,6 +85,6 @@ Here is an example of a House B/L generated in Odoo:
 
 ## 8. Next Steps / Workflow Transition
 Now that the customer has their ownership documents:
-1. The system moves to **Stage 09: Transit Tracking**.
+1. The system moves to **Stage 09: [Transit Tracking](09-Transit-Tracking.md)**.
 2. The ship is now at sea. We monitor its location.
 3. We send "Status Updates" to the customer so they know when the ship will arrive.

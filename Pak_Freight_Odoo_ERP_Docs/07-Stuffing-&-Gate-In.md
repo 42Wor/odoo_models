@@ -87,6 +87,6 @@ Here is an example of a container that has just reached the port:
 
 ## 8. Next Steps / Workflow Transition
 Once the container is safely inside the port:
-1. The system moves to **Stage 08: B/L Issuance**.
+1. The system moves to **Stage 08: [B/L Issuance](08-BL-Issuance.md)**.
 2. The shipping line confirms the container is on the ship.
 3. We prepare the **Bill of Lading (B/L)**, which is the "Title Deed" or ownership document for the goods.

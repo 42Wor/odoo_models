@@ -96,5 +96,5 @@ Here is an example of a completed Quotation record:
 After the customer reviews the PDF quote:
 1. The customer agrees to the price.
 2. The user clicks **"Confirm Booking"**.
-3. The system moves to **Stage 03: Booking**.
+3. The system moves to **Stage 03: [Booking](03-Booking.md)**.
 4. A central Job Order number (e.g., `JO-2025-XXXX`) is automatically created, and the space is booked with the shipping line.
